@@ -1,5 +1,7 @@
 import React from "react";
 
-export default function Event() {
-    return <div>event</div>;
+export default class Event extends React.Component {
+    render() {
+        return <div>event</div>;
+    }
 }

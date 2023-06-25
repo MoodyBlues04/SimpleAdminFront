@@ -1,41 +1,51 @@
-import React, { useState } from "react";
+import React from "react";
 import Api from "../classes/api";
 
-export default function Login(props) {
-    let api = new Api();
-    let setJwt = props["setJwt"];
+export default class Login extends React.Component {
+    constructor(setJwt) {
+        super();
+        this.api = new Api();
+        this.setJwt = setJwt;
+        this.state = {
+            username: null,
+            password: null,
+        };
+    }
 
-    let [username, setUsername] = useState();
-    let [password, setPassword] = useState();
-
-    const handleSubmit = async (e) => {
+    async handleSubmit(e) {
         e.preventDefault();
-        const loginResponse = await api.sendPost("login", {
-            username,
-            password,
+        const loginResponse = await this.api.sendPost("login", {
+            username: this.state.username,
+            password: this.state.password,
         });
-        setJwt(loginResponse["access_token"]);
-    };
+        this.setJwt(loginResponse["access_token"]);
+    }
 
-    return (
-        <form onSubmit={handleSubmit}>
-            <label>
-                <p>Username</p>
-                <input
-                    type="text"
-                    onChange={(e) => setUsername(e.target.value)}
-                />
-            </label>
-            <label>
-                <p>Password</p>
-                <input
-                    type="password"
-                    onChange={(e) => setPassword(e.target.value)}
-                />
-            </label>
-            <div>
-                <button type="submit">Submit</button>
-            </div>
-        </form>
-    );
+    render() {
+        return (
+            <form onSubmit={(e) => this.handleSubmit(e)}>
+                <label>
+                    <p>Username</p>
+                    <input
+                        type="text"
+                        onChange={(e) =>
+                            this.setState({ username: e.target.value })
+                        }
+                    />
+                </label>
+                <label>
+                    <p>Password</p>
+                    <input
+                        type="password"
+                        onChange={(e) =>
+                            this.setState({ password: e.target.value })
+                        }
+                    />
+                </label>
+                <div>
+                    <button type="submit">Submit</button>
+                </div>
+            </form>
+        );
+    }
 }

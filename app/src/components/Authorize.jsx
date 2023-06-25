@@ -1,24 +1,44 @@
 import React from "react";
 import Signup from "./Signup";
 import Login from "./Login";
-import { useState } from "react";
 import "./../style/Authorize.css";
 
-export default function Authorize(props) {
-    const setJwt = props["setJwt"];
+export default class Authorize extends React.Component {
+    constructor(setJwt) {
+        super();
+        this.setJwt = setJwt;
+        this.state = {
+            isLogin: false,
+        };
+    }
 
-    const [isLogin, setIsLogin] = useState(false);
-    const handleLoginClick = (event) => {
-        setIsLogin((current) => !current);
-    };
+    handleLoginClick() {
+        this.setState({
+            isLogin: !this.state.isLogin,
+        });
+    }
 
-    return (
-        <div className="authorize-wrapper">
-            <button onClick={handleLoginClick}>
-                {isLogin ? "Sign up" : "Log in"}
-            </button>
+    getAuthorizeType() {
+        return this.state.isLogin ? "Sign up" : "Log in";
+    }
 
-            {isLogin ? <Login setJwt={setJwt} /> : <Signup setJwt={setJwt} />}
-        </div>
-    );
+    getAuthComponent() {
+        return this.state.isLogin ? (
+            <Login setJwt={this.setJwt} />
+        ) : (
+            <Signup setJwt={this.setJwt} />
+        );
+    }
+
+    render() {
+        return (
+            <div className="authorize-wrapper">
+                <button onClick={(e) => this.handleLoginClick()}>
+                    {this.getAuthorizeType()}
+                </button>
+
+                {this.getAuthComponent()}
+            </div>
+        );
+    }
 }
