@@ -14,11 +14,14 @@ export default class Login extends React.Component {
     }
 
     async handleSubmit(e) {
-        e.preventDefault();
-        const loginResponse = await this.api.sendPost("login", this.state);
-        console.log(loginResponse);
-        this.setJwt(loginResponse["access_token"]);
-        this.setCredentialsByState();
+        try {
+            e.preventDefault();
+            const loginResponse = await this.api.sendPost("login", this.state);
+            this.setJwt(loginResponse.access_token);
+            this.setCredentialsByState();
+        } catch (error) {
+            throw error;
+        }
     }
 
     setCredentialsByState() {

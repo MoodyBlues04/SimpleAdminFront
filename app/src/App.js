@@ -12,8 +12,8 @@ import EventCreate from './components/EventCreate';
 
 function App() { // TODO context
   // localStorage.clear();
-  const [jwt, setJwt] = useLocalStorage('jwt');
-  const [credentials, setCredentials] = useLocalStorage('credentials');
+  const [jwt, setJwt] = useLocalStorage('jwt', null);
+  const [credentials, setCredentials] = useLocalStorage('credentials', null);
   let props = {
     jwt: jwt,
     setJwt: setJwt,
@@ -27,7 +27,7 @@ function App() { // TODO context
 
   return (
     <div className='App'>
-      <Header {...props}/> {/* TODO пароль то не надо) */}
+      <Header {...props}/>
       <div className='Container'>
         <div className='row' style={{width: "100%"}}>
           <NavBar jwt={jwt}/>

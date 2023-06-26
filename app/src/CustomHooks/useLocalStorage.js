@@ -7,7 +7,15 @@ export default function useLocalStorage(key, initialValue) {
         }
         try {
             const item = window.localStorage.getItem(key);
-            return item ? JSON.parse(item) : initialValue;
+            if (!item) {
+                return initialValue;
+            }
+
+            const itemObject = JSON.parse(item);
+            if (itemObject.expirationTime <= new Date().getTime()) {
+                return initialValue;
+            }
+            return itemObject.value;
         } catch (error) {
             console.error(error);
             return initialValue;
@@ -19,7 +27,12 @@ export default function useLocalStorage(key, initialValue) {
             const valueToStore = value instanceof Function ? value(storedValue) : value;
             setStoredValue(valueToStore);
             if (typeof window !== "undefined") {
-                window.localStorage.setItem(key, JSON.stringify(valueToStore));
+                const withExpiration = {
+                    value: valueToStore,
+                    expirationTime: (new Date().getTime() + 3600 * 1000)
+                }
+
+                window.localStorage.setItem(key, JSON.stringify(withExpiration));
             }
         } catch (error) {
             console.error(error);
