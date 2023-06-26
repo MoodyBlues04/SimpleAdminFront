@@ -1,5 +1,6 @@
 import React from "react";
 import Api from "../classes/Api";
+import ProfileEventItem from "./ProfileEventItem";
 
 export default class Profile extends React.Component {
     constructor(props) {
@@ -18,13 +19,31 @@ export default class Profile extends React.Component {
         return await this.api.sendAuthorizedGet("profile");
     }
 
+    getCreatedEventsList() {
+        if (!this.state.profile.created_events) {
+            return;
+        }
+        return this.state.profile.created_events.map(function (event, idx) {
+            return <ProfileEventItem event={event} />;
+        });
+    }
+
+    getJoinedEventsList() {
+        if (!this.state.profile.joined_events) {
+            return;
+        }
+        return this.state.profile.joined_events.map(function (event, idx) {
+            return <ProfileEventItem event={event} />;
+        });
+    }
+
     render() {
         return (
             <div
                 className="card"
-                style={{ width: "22rem", height: "300px", marginTop: "20px" }}
+                style={{ width: "22rem", height: "auto", marginTop: "20px" }}
             >
-                <div className="card-body">
+                <div className="card-body" style={{ marginBottom: "15px" }}>
                     <h5 className="card-title">
                         {this.state.profile.username}
                     </h5>
@@ -40,14 +59,13 @@ export default class Profile extends React.Component {
                         </div>
                     </p>
                 </div>
-                <ul className="list-group list-group-flush">
-                    <li className="list-group-item">
-                        <a href="#" className="card-link">
-                            Card link
-                        </a>
-                    </li>
-                    <li className="list-group-item">Dapibus ac facilisis in</li>
-                    <li className="list-group-item">Vestibulum at eros</li>
+                <div class="card-header">Created events:</div>
+                <ul class="list-group list-group-flush">
+                    {this.getCreatedEventsList()}
+                </ul>
+                <div class="card-header">Joined events:</div>
+                <ul class="list-group list-group-flush">
+                    {this.getJoinedEventsList()}
                 </ul>
             </div>
         );

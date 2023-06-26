@@ -1,6 +1,7 @@
 import React from "react";
 import "../style/Header.css";
 import Api from "../classes/Api";
+import { Link } from "react-router-dom";
 
 export default class Header extends React.Component {
     constructor(props) {
@@ -19,9 +20,15 @@ export default class Header extends React.Component {
     render() {
         return (
             <header className="Header">
-                <div style={{ marginRight: "25px" }}>
+                <Link
+                    style={{
+                        marginRight: "25px",
+                        color: "black",
+                    }}
+                    to="/profile"
+                >
                     {this.credentials.username}
-                </div>
+                </Link>
                 <button className="btn" onClick={(e) => this.logout(e)}>
                     Log out
                 </button>
