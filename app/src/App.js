@@ -8,6 +8,7 @@ import NavBar from './components/NavBar';
 import Event from './components/Event';
 import useLocalStorage from './CustomHooks/useLocalStorage';
 import Authorize from './components/Authorize';
+import EventCreate from './components/EventCreate';
 
 function App() { // TODO context
   // localStorage.clear();
@@ -32,7 +33,8 @@ function App() { // TODO context
           <NavBar jwt={jwt}/>
           <div className='col-9' style={{display: "flex", justifyContent: "center"}}>
             <Routes>
-              <Route path='/event/:id' element={<Event {...props} key={window.location.pathname}/>}/>
+              <Route path='/event/create' element={<EventCreate {...props}/>}/>
+              <Route path='/event/:id' element={<Event {...props}/>}/>
               <Route path='/profile' element={<Profile {...props}/>}/>
               <Route path='/' element={<Home/>}/>
             </Routes>

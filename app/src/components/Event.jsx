@@ -27,15 +27,20 @@ class Event extends React.Component {
     }
 
     async joinEvent() {
-        this.api.sendAuthorizedPost(`event/${this.state.event.id}/join`);
+        await this.api.sendAuthorizedPost(`event/${this.state.event.id}/join`);
         await this.setEvent();
-        window.location.reload();
     }
 
     async cancelEvent() {
-        this.api.sendAuthorizedPost(`event/${this.state.event.id}/cancel`);
+        await this.api.sendAuthorizedPost(
+            `event/${this.state.event.id}/cancel`
+        );
         await this.setEvent();
-        window.location.reload();
+    }
+
+    async deleteEvent() {
+        await this.api.sendAuthorizedDelete(`event/${this.state.event.id}`);
+        window.location.href = "../../";
     }
 
     async setEvent() {
@@ -57,6 +62,14 @@ class Event extends React.Component {
         return false;
     }
 
+    isEventCreator() {
+        if (!this.state.event.creator) {
+            return false;
+        }
+
+        return this.credentials.username == this.state.event.creator.username;
+    }
+
     getJoinEventButton() {
         if (this.isAlreadyJoinedEvent()) {
             return (
@@ -76,6 +89,22 @@ class Event extends React.Component {
                 style={{ position: "absolute", bottom: 10 }}
             >
                 Join
+            </button>
+        );
+    }
+
+    getDeleteEventButton() {
+        if (!this.isEventCreator()) {
+            return;
+        }
+
+        return (
+            <button
+                className="btn btn-danger"
+                style={{ position: "absolute", bottom: 10, left: 90 }}
+                onClick={(e) => this.deleteEvent()}
+            >
+                Delete
             </button>
         );
     }
@@ -103,6 +132,7 @@ class Event extends React.Component {
                     </h6>
                     <p className="card-text">{this.state.event.text}</p>
                     {this.getJoinEventButton()}
+                    {this.getDeleteEventButton()}
                 </div>
             </div>
         );

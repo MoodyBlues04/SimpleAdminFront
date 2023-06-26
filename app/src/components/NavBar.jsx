@@ -2,6 +2,7 @@ import React from "react";
 import "./../style/NavBar.css";
 import Api from "../classes/Api";
 import NavItem from "./NavItem";
+import { Link } from "react-router-dom";
 
 export default class NavBar extends React.Component {
     constructor(props) {
@@ -28,6 +29,9 @@ export default class NavBar extends React.Component {
                 {this.state.events.map(function (event, i) {
                     return <NavItem event={event} />;
                 })}
+                <Link to="event/create" style={{ marginTop: "10px" }}>
+                    Create new Event
+                </Link>
             </div>
         );
     }
