@@ -8,11 +8,6 @@ export default class ProfileEventItem extends React.Component {
         this.event = props.event;
     }
 
-    changeBackground(e) {
-        let backgrounds = { 0: "white", 1: "blue" };
-        e.target.style.background = "";
-    }
-
     render() {
         return (
             <Link
