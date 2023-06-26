@@ -1,6 +1,7 @@
 import React from "react";
 import withRouter from "./WithRouter";
 import Api from "../classes/Api";
+import EventJoinedUser from "./EventJoinedUser";
 
 class Event extends React.Component {
     constructor(props) {
@@ -109,6 +110,15 @@ class Event extends React.Component {
         );
     }
 
+    getJoinedUsersList() {
+        if (!this.state.event.joined_users) {
+            return;
+        }
+        return this.state.event.joined_users.map(function (user, idx) {
+            return <EventJoinedUser user={user} />;
+        });
+    }
+
     render() {
         if (!this.state.event) {
             // TODO так же везде. а лучше загрузку
@@ -131,6 +141,12 @@ class Event extends React.Component {
                         Creator: {this.state.event.creator.username}
                     </h6>
                     <p className="card-text">{this.state.event.text}</p>
+
+                    <div class="card-header">Joined users:</div>
+                    <ul class="list-group list-group-flush">
+                        {this.getJoinedUsersList()}
+                    </ul>
+
                     {this.getJoinEventButton()}
                     {this.getDeleteEventButton()}
                 </div>
