@@ -1,11 +1,12 @@
 import React from "react";
-import Api from "../classes/api";
+import Api from "../classes/Api";
 
 export default class Signup extends React.Component {
-    constructor(setJwt) {
+    constructor(props) {
         super();
         this.api = new Api();
-        this.setJwt = setJwt;
+        this.setJwt = props.setJwt;
+        this.setCredentials = props.setCredentials;
         this.state = {
             username: null,
             name: null,
@@ -17,68 +18,87 @@ export default class Signup extends React.Component {
 
     async handleSubmit(e) {
         e.preventDefault();
-        const loginResponse = await this.api.sendPost("user", {
+        const loginResponse = await this.api.sendPost("user", this.state);
+        this.setJwt(loginResponse["access_token"]);
+        this.setCredentialsByState();
+    }
+
+    setCredentialsByState() {
+        this.setCredentials({
             username: this.state.username,
-            name: this.state.name,
-            surname: this.state.surname,
-            birthday: this.state.birthday,
             password: this.state.password,
         });
-        this.setJwt(loginResponse["access_token"]);
     }
 
     render() {
         return (
-            <form onSubmit={(e) => this.handleSubmit(e)}>
-                <label>
-                    <p>Username</p>
-                    <input
-                        type="text"
-                        onChange={(e) =>
-                            this.setState({ username: e.target.value })
-                        }
-                    />
-                </label>
-                <label>
-                    <p>Name</p>
-                    <input
-                        type="text"
-                        onChange={(e) =>
-                            this.setState({ name: e.target.value })
-                        }
-                    />
-                </label>
-                <label>
-                    <p>Surname</p>
-                    <input
-                        type="text"
-                        onChange={(e) =>
-                            this.setState({ surname: e.target.value })
-                        }
-                    />
-                </label>
-                <label>
-                    <p>Birthday</p>
-                    <input
-                        type="text"
-                        onChange={(e) =>
-                            this.setState({ birthday: e.target.value })
-                        }
-                    />
-                </label>
-                <label>
-                    <p>Password</p>
-                    <input
-                        type="password"
-                        onChange={(e) =>
-                            this.setState({ password: e.target.value })
-                        }
-                    />
-                </label>
-                <div>
-                    <button type="submit">Submit</button>
-                </div>
-            </form>
+            <div className="container" style={{ width: "30%" }}>
+                <form onSubmit={(e) => this.handleSubmit(e)}>
+                    <div className="form-group">
+                        <label htmlFor="username">Username</label>
+                        <input
+                            type="text"
+                            className="form-control"
+                            id="username"
+                            placeholder="Enter username"
+                            onChange={(e) =>
+                                this.setState({ username: e.target.value })
+                            }
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="name">Name</label>
+                        <input
+                            type="text"
+                            className="form-control"
+                            id="name"
+                            placeholder="Enter name"
+                            onChange={(e) =>
+                                this.setState({ name: e.target.value })
+                            }
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="surname">Surname</label>
+                        <input
+                            type="text"
+                            className="form-control"
+                            id="surname"
+                            placeholder="Enter surname"
+                            onChange={(e) =>
+                                this.setState({ surname: e.target.value })
+                            }
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="birthday">Birthday</label>
+                        <input
+                            type="text"
+                            className="form-control"
+                            id="birthday"
+                            placeholder="Enter birthday"
+                            onChange={(e) =>
+                                this.setState({ birthday: e.target.value })
+                            }
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="password">Password</label>
+                        <input
+                            type="password"
+                            className="form-control"
+                            id="password"
+                            placeholder="Password"
+                            onChange={(e) =>
+                                this.setState({ password: e.target.value })
+                            }
+                        />
+                    </div>
+                    <div>
+                        <button type="submit">Submit</button>
+                    </div>
+                </form>
+            </div>
         );
     }
 }

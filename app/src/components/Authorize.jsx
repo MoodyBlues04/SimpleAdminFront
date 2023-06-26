@@ -4,11 +4,11 @@ import Login from "./Login";
 import "./../style/Authorize.css";
 
 export default class Authorize extends React.Component {
-    constructor(setJwt) {
+    constructor(props) {
         super();
-        this.setJwt = setJwt;
+        this.props = props;
         this.state = {
-            isLogin: false,
+            isLogin: true,
         };
     }
 
@@ -24,16 +24,19 @@ export default class Authorize extends React.Component {
 
     getAuthComponent() {
         return this.state.isLogin ? (
-            <Login setJwt={this.setJwt} />
+            <Login {...this.props} />
         ) : (
-            <Signup setJwt={this.setJwt} />
+            <Signup {...this.props} />
         );
     }
 
     render() {
         return (
             <div className="authorize-wrapper">
-                <button onClick={(e) => this.handleLoginClick()}>
+                <button
+                    className="btn btn-success"
+                    onClick={(e) => this.handleLoginClick()}
+                >
                     {this.getAuthorizeType()}
                 </button>
 

@@ -1,6 +1,5 @@
 import './style/App.css';
-import React, { useState } from 'react';
-import User from './classes/User';
+import React from 'react';
 import { Route, Routes, Navigate } from 'react-router';
 import Home from './components/Home';
 import Header from './components/Header';
@@ -10,25 +9,34 @@ import Event from './components/Event';
 import useLocalStorage from './CustomHooks/useLocalStorage';
 import Authorize from './components/Authorize';
 
-function App() {
-  // let [jwt, setJwt] = useLocalStorage(null);
-  let [jwt, setJwt] = useState(null);
-  if(!jwt) {
-    return <Authorize setJwt={setJwt} />
+function App() { // TODO context
+  // localStorage.clear();
+  const [jwt, setJwt] = useLocalStorage('jwt');
+  const [credentials, setCredentials] = useLocalStorage('credentials');
+  let props = {
+    jwt: jwt,
+    setJwt: setJwt,
+    credentials: credentials,
+    setCredentials: setCredentials
+  };
+
+  if (!jwt || !credentials) {
+    return <Authorize {...props} />
   }
 
   return (
     <div className='App'>
-      <Header/>
+      <Header {...props}/> {/* TODO пароль то не надо) */}
       <div className='Container'>
-        <NavBar/>
-        <div className='Content'>
-          <Routes>
-            <Route path='/' element={<Home/>}>
-            </Route>
-            <Route path='/profile' element={<Profile/>}/>
-            <Route path='/event' element={<Event/>}/>
-          </Routes>
+        <div className='row' style={{width: "100%"}}>
+          <NavBar jwt={jwt}/>
+          <div className='col-9' style={{display: "flex", justifyContent: "center"}}>
+            <Routes>
+              <Route path='/event/:id' element={<Event {...props} key={window.location.pathname}/>}/>
+              <Route path='/profile' element={<Profile {...props}/>}/>
+              <Route path='/' element={<Home/>}/>
+            </Routes>
+          </div>
         </div>
       </div>
     </div>
