@@ -25,7 +25,7 @@ export default class NavBar extends React.Component {
     render() {
         return (
             <div className="NavBar col-3">
-                <h4>Events</h4>
+                <h4 style={{ marginTop: "10px" }}>Events:</h4>
                 {this.state.events.map(function (event, i) {
                     return <NavItem event={event} />;
                 })}

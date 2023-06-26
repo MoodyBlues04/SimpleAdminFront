@@ -2,17 +2,16 @@
     height: 100%;
     align-items: center;
     display: flex;
-    background-color:aquamarine;
+    background-color:#e1f3f5;
     flex-direction: column;
 }
 
 .NavItem {
     display: flex;
-    width: 100%;
+    width: 108%;
     height: 40px;
     align-items: center;
     justify-content: center;
     text-align: center;
-    margin-top: 5px;
-    background-color: blueviolet;
+    background-color: #e1f3f5;
 }
