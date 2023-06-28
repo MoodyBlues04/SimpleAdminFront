@@ -8,8 +8,8 @@ import LoadingSpinner from "./LoadingSpinner";
 export default class NavBar extends React.Component {
     constructor(props) {
         super();
-        this.api = new Api(props.jwt);
         this.state = {
+            api: new Api(props.jwt),
             events: [],
             hasErrors: false,
         };
@@ -25,8 +25,8 @@ export default class NavBar extends React.Component {
     }
 
     async getEvents() {
-        let result = await this.api.sendAuthorizedGet("event");
-        if (this.api.hasError()) {
+        let result = await this.state.api.sendAuthorizedGet("event");
+        if (this.state.api.hasError()) {
             this.setState({ hasErrors: true });
             return;
         }
@@ -45,8 +45,8 @@ export default class NavBar extends React.Component {
     }
 
     render() {
-        if (this.state.hasErrors) {
-            throw new Error(this.api.error.message);
+        if (this.state.api.hasError()) {
+            throw this.state.api.getError();
         }
 
         return (

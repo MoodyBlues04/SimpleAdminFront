@@ -6,20 +6,24 @@ export default class Refresh extends React.Component {
     constructor(props) {
         super();
         this.state = props;
+        this.api = new Api();
     }
 
     async refreshJwt() {
         const jwt = await this.getJwtByCredentials(this.state);
-        console.log(jwt);
         this.state.setJwt(jwt);
     }
 
     async getJwtByCredentials() {
-        let api = new Api();
-        const loginResponse = await api.sendPost(
+        const loginResponse = await this.api.sendPost(
             "login",
             this.state.credentials
         );
+
+        if (this.api.hasError()) {
+            throw this.api.getError();
+        }
+
         return loginResponse.access_token;
     }
 

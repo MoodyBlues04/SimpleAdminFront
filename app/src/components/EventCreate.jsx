@@ -14,6 +14,9 @@ export default class EventCreate extends React.Component {
     async handleSubmit(e) {
         e.preventDefault();
         await this.api.sendAuthorizedPost("event", this.state);
+        if (this.api.hasError()) {
+            throw this.api.getError();
+        }
         window.location.reload();
     }
 

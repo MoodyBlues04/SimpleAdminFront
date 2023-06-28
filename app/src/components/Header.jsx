@@ -11,10 +11,14 @@ export default class Header extends React.Component {
         this.setCredentials = props.setCredentials;
     }
 
-    logout() {
-        this.api.sendAuthorizedPost("logout");
+    async logout() {
+        await this.api.sendAuthorizedPost("logout");
+        if (this.api.hasError()) {
+            throw this.api.getError();
+        }
+
         localStorage.clear();
-        window.location.reload(false);
+        window.location.reload();
     }
 
     render() {

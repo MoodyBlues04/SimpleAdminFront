@@ -18,6 +18,10 @@ export default class Login extends React.Component {
         try {
             e.preventDefault();
             const loginResponse = await this.login();
+            if (this.api.hasError()) {
+                throw this.api.getError();
+            }
+
             this.setJwt(loginResponse.access_token);
             this.setCredentials(
                 this.state,

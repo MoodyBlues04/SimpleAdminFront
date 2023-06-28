@@ -2,13 +2,14 @@ import React from "react";
 import withRouter from "./WithRouter";
 import Api from "../classes/Api";
 import EventJoinedUser from "./EventJoinedUser";
+import LoadingSpinner from "./LoadingSpinner";
 
 class Event extends React.Component {
     constructor(props) {
         super();
         this.credentials = props.credentials;
-        this.api = new Api(props.jwt);
         this.state = {
+            api: new Api(props.jwt),
             event: null,
         };
     }
@@ -24,23 +25,29 @@ class Event extends React.Component {
     }
 
     async getEvent() {
-        return this.api.sendAuthorizedGet(`event/${this.props.params.id}`); // TODO event class
+        return this.state.api.sendAuthorizedGet(
+            `event/${this.props.params.id}`
+        ); // TODO event class
     }
 
     async joinEvent() {
-        await this.api.sendAuthorizedPost(`event/${this.state.event.id}/join`);
+        await this.state.api.sendAuthorizedPost(
+            `event/${this.state.event.id}/join`
+        );
         await this.setEvent();
     }
 
     async cancelEvent() {
-        await this.api.sendAuthorizedPost(
+        await this.state.api.sendAuthorizedPost(
             `event/${this.state.event.id}/cancel`
         );
         await this.setEvent();
     }
 
     async deleteEvent() {
-        await this.api.sendAuthorizedDelete(`event/${this.state.event.id}`);
+        await this.state.api.sendAuthorizedDelete(
+            `event/${this.state.event.id}`
+        );
         window.location.href = "../../";
     }
 
@@ -120,12 +127,13 @@ class Event extends React.Component {
     }
 
     render() {
-        if (!this.state.event) {
-            // TODO так же везде. а лучше загрузку
-            return <div></div>;
+        if (this.state.api.hasError()) {
+            throw this.state.api.getError();
         }
 
-        console.log(this.state.event);
+        if (!this.state.event) {
+            return <LoadingSpinner />;
+        }
 
         return (
             <div

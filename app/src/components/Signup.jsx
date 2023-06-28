@@ -19,6 +19,10 @@ export default class Signup extends React.Component {
     async handleSubmit(e) {
         e.preventDefault();
         const loginResponse = await this.api.sendPost("user", this.state);
+        if (this.api.hasError()) {
+            throw this.api.getError();
+        }
+
         this.setJwt(loginResponse.access_token);
         this.setCredentialsByState();
     }
