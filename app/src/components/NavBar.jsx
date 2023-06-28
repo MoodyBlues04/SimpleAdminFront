@@ -3,10 +3,10 @@ import "./../style/NavBar.css";
 import Api from "../classes/Api";
 import NavItem from "./NavItem";
 import { Link } from "react-router-dom";
+import LoadingSpinner from "./LoadingSpinner";
 
 export default class NavBar extends React.Component {
     constructor(props) {
-        // TODO get from storage ?
         super();
         this.api = new Api(props.jwt);
         this.state = {
@@ -34,6 +34,16 @@ export default class NavBar extends React.Component {
         return result;
     }
 
+    getNavItems() {
+        if (this.state.events.length === 0) {
+            return <LoadingSpinner />;
+        }
+
+        return this.state.events.map(function (event, i) {
+            return <NavItem event={event} />;
+        });
+    }
+
     render() {
         if (this.state.hasErrors) {
             throw new Error(this.api.error.message);
@@ -42,9 +52,7 @@ export default class NavBar extends React.Component {
         return (
             <div className="NavBar col-3">
                 <h4 style={{ marginTop: "10px" }}>Events:</h4>
-                {this.state.events.map(function (event, i) {
-                    return <NavItem event={event} />;
-                })}
+                {this.getNavItems()}
                 <Link className="link" to="event/create">
                     Create new Event
                 </Link>

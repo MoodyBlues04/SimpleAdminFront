@@ -55,7 +55,7 @@ class Event extends React.Component {
 
         let joinedUsers = this.state.event.joined_users;
         for (let i = 0; i < joinedUsers.length; i++) {
-            if (joinedUsers[i].username == this.credentials.username) {
+            if (joinedUsers[i].username === this.credentials.username) {
                 return true;
             }
         }
@@ -68,7 +68,7 @@ class Event extends React.Component {
             return false;
         }
 
-        return this.credentials.username == this.state.event.creator.username;
+        return this.credentials.username === this.state.event.creator.username;
     }
 
     getJoinEventButton() {

@@ -1,6 +1,7 @@
 import React from "react";
 import Api from "../classes/Api";
 import ProfileEventItem from "./ProfileEventItem";
+import LoadingSpinner from "./LoadingSpinner";
 
 export default class Profile extends React.Component {
     constructor(props) {
@@ -38,6 +39,14 @@ export default class Profile extends React.Component {
     }
 
     render() {
+        if (!this.state.profile.username) {
+            return (
+                <div style={{ marginTop: "100px" }}>
+                    <LoadingSpinner />
+                </div>
+            );
+        }
+
         return (
             <div
                 className="card"

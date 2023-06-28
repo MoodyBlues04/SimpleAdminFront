@@ -12,9 +12,7 @@ export default class ErrorPage extends React.Component {
                 <div className="container">
                     <div className="row justify-content-center">
                         <div className="col-md-12 text-center">
-                            <span className="display-1 d-block">
-                                Error code
-                            </span>
+                            <span className="display-1 d-block">500</span>
                             <div className="mb-4 lead">{this.errorMessage}</div>
                             <a href="/" className="btn btn-link">
                                 Back to Home

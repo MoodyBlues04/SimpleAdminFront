@@ -15,9 +15,7 @@ export default class NavItem extends React.Component {
                 key={this.event.id}
                 to={`/event/${this.event.id}`}
             >
-                <div>
-                    {this.event.id} {this.event.header}
-                </div>
+                {this.event.id} {this.event.header}
             </Link>
         );
     }

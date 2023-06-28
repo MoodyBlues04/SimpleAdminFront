@@ -18,7 +18,6 @@ export default class Login extends React.Component {
         try {
             e.preventDefault();
             const loginResponse = await this.login();
-
             this.setJwt(loginResponse.access_token);
             this.setCredentials(
                 this.state,
@@ -72,10 +71,10 @@ export default class Login extends React.Component {
                             }
                         />
                     </div>
-                    <div class="form-check">
+                    <div className="form-check">
                         <input
                             type="checkbox"
-                            class="form-check-input"
+                            className="form-check-input"
                             id="rememberMe"
                             onChange={(e) =>
                                 this.setState({
@@ -84,7 +83,10 @@ export default class Login extends React.Component {
                                 })
                             }
                         />
-                        <label class="form-check-label" for="rememberMe">
+                        <label
+                            className="form-check-label"
+                            htmlFor="rememberMe"
+                        >
                             Remember me
                         </label>
                     </div>
