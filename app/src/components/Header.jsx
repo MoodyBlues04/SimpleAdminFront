@@ -25,9 +25,20 @@ export default class Header extends React.Component {
         return (
             <header className="Header">
                 <Link
+                    class="navbar-brand"
+                    to="/"
+                    style={{ marginLeft: "20px" }}
+                >
+                    <img
+                        src="https://i.ibb.co/Y4C4Bn2/Home-icon-svg.png"
+                        width="25"
+                        height="25"
+                    />
+                </Link>
+                <Link
                     className="header-link"
                     style={{
-                        marginRight: "25px",
+                        marginRight: "-1000px",
                         color: "black",
                     }}
                     to="/profile"

@@ -13,6 +13,12 @@ export default class Api
         return null !== this.error;
     }
 
+    getError() {
+       const error = new Error(this.error.response.data.message);
+       error.code = this.error.response.status;
+       return error;
+    }
+
     async sendAuthorizedGet(url) {
         return await this.sendGet(url, this.getAuthHeaders());
     }
