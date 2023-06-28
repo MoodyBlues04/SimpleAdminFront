@@ -19,7 +19,7 @@ export default class Signup extends React.Component {
     async handleSubmit(e) {
         e.preventDefault();
         const loginResponse = await this.api.sendPost("user", this.state);
-        this.setJwt(loginResponse["access_token"]);
+        this.setJwt(loginResponse.access_token);
         this.setCredentialsByState();
     }
 
@@ -33,6 +33,7 @@ export default class Signup extends React.Component {
     render() {
         return (
             <div className="container" style={{ width: "30%" }}>
+                <h3>Sign up</h3>
                 <form onSubmit={(e) => this.handleSubmit(e)}>
                     <div className="form-group">
                         <label htmlFor="username">Username</label>

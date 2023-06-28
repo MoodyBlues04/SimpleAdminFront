@@ -10,27 +10,43 @@ export default class Login extends React.Component {
         this.state = {
             username: null,
             password: null,
+            rememberCredentials: false,
         };
     }
 
     async handleSubmit(e) {
         try {
             e.preventDefault();
-            const loginResponse = await this.api.sendPost("login", this.state);
+            const loginResponse = await this.login();
+
             this.setJwt(loginResponse.access_token);
-            this.setCredentialsByState();
+            this.setCredentials(
+                this.state,
+                this.getCredentialsExpirationTime()
+            );
         } catch (error) {
             throw error;
         }
     }
 
-    setCredentialsByState() {
-        this.setCredentials(this.state);
+    async login() {
+        return this.api.sendPost("login", {
+            username: this.state.username,
+            password: this.state.password,
+        });
+    }
+
+    /**
+     * @returns expiration time in seconds
+     */
+    getCredentialsExpirationTime() {
+        return this.rememberCredentials ? 3600 * 24 * 10 : 3600;
     }
 
     render() {
         return (
             <div className="container" style={{ width: "30%" }}>
+                <h3>Log in</h3>
                 <form onSubmit={(e) => this.handleSubmit(e)}>
                     <div className="form-group">
                         <label htmlFor="username">Username</label>
@@ -55,6 +71,22 @@ export default class Login extends React.Component {
                                 this.setState({ password: e.target.value })
                             }
                         />
+                    </div>
+                    <div class="form-check">
+                        <input
+                            type="checkbox"
+                            class="form-check-input"
+                            id="rememberMe"
+                            onChange={(e) =>
+                                this.setState({
+                                    rememberCredentials:
+                                        !this.state.rememberCredentials,
+                                })
+                            }
+                        />
+                        <label class="form-check-label" for="rememberMe">
+                            Remember me
+                        </label>
                     </div>
                     <button
                         type="submit"

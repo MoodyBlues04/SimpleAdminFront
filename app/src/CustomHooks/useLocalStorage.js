@@ -1,13 +1,6 @@
 import { useState } from "react";
 
-/**
- * 
- * @param {string} key 
- * @param {int} initialValue 
- * @param {int} expirationTime in seconds
- * @returns 
- */
-export default function useLocalStorage(key, initialValue = null, expirationTime = 3600) {
+export default function useLocalStorage(key, initialValue = null) {
     const [storedValue, setStoredValue] = useState(() => {
         if (typeof window === "undefined") {
             return initialValue;
@@ -30,7 +23,7 @@ export default function useLocalStorage(key, initialValue = null, expirationTime
         }
     });
 
-    const setValue = (value) => {
+    const setValue = (value, expirationTime = 3600) => {
         try {
             const valueToStore = value instanceof Function ? value(storedValue) : value;
             setStoredValue(valueToStore);
