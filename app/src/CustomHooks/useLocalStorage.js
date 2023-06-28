@@ -1,6 +1,13 @@
 import { useState } from "react";
 
-export default function useLocalStorage(key, initialValue) {
+/**
+ * 
+ * @param {string} key 
+ * @param {int} initialValue 
+ * @param {int} expirationTime in seconds
+ * @returns 
+ */
+export default function useLocalStorage(key, initialValue = null, expirationTime = 3600) {
     const [storedValue, setStoredValue] = useState(() => {
         if (typeof window === "undefined") {
             return initialValue;
@@ -15,6 +22,7 @@ export default function useLocalStorage(key, initialValue) {
             if (itemObject.expirationTime <= new Date().getTime()) {
                 return initialValue;
             }
+
             return itemObject.value;
         } catch (error) {
             console.error(error);
@@ -29,7 +37,7 @@ export default function useLocalStorage(key, initialValue) {
             if (typeof window !== "undefined") {
                 const withExpiration = {
                     value: valueToStore,
-                    expirationTime: (new Date().getTime() + 3600 * 1000)
+                    expirationTime: (new Date().getTime() + expirationTime * 1000)
                 }
 
                 window.localStorage.setItem(key, JSON.stringify(withExpiration));
