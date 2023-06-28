@@ -45,7 +45,7 @@ export default class NavBar extends React.Component {
                 {this.state.events.map(function (event, i) {
                     return <NavItem event={event} />;
                 })}
-                <Link to="event/create" style={{ marginTop: "10px" }}>
+                <Link className="link" to="event/create">
                     Create new Event
                 </Link>
             </div>

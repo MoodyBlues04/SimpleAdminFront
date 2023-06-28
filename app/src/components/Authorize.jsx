@@ -33,14 +33,11 @@ export default class Authorize extends React.Component {
     render() {
         return (
             <div className="authorize-wrapper">
-                <button
-                    className="btn btn-success"
-                    onClick={(e) => this.handleLoginClick()}
-                >
-                    {this.getAuthorizeType()}
-                </button>
-
                 {this.getAuthComponent()}
+
+                <a className="btn" onClick={(e) => this.handleLoginClick()}>
+                    {this.getAuthorizeType()}
+                </a>
             </div>
         );
     }

@@ -95,7 +95,13 @@ export default class Signup extends React.Component {
                         />
                     </div>
                     <div>
-                        <button type="submit">Submit</button>
+                        <button
+                            className="btn btn-primary"
+                            type="submit"
+                            style={{ marginTop: "10px" }}
+                        >
+                            Submit
+                        </button>
                     </div>
                 </form>
             </div>

@@ -10,16 +10,15 @@ export default class NavItem extends React.Component {
 
     render() {
         return (
-            <div className="NavItem" key={this.event.id}>
-                <Link
-                    to={`/event/${this.event.id}`}
-                    style={{ textDecoration: "none" }}
-                >
-                    <div>
-                        {this.event.id} {this.event.header}
-                    </div>
-                </Link>
-            </div>
+            <Link
+                className="NavItem"
+                key={this.event.id}
+                to={`/event/${this.event.id}`}
+            >
+                <div>
+                    {this.event.id} {this.event.header}
+                </div>
+            </Link>
         );
     }
 }

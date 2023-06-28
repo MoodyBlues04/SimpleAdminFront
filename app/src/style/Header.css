@@ -7,3 +7,11 @@
     justify-content: right;
     font-size: 120%;
 }
+
+.header-link {
+    text-decoration: none;
+}
+
+.header-link:hover {
+    text-decoration: underline;
+}

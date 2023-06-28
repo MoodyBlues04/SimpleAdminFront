@@ -21,6 +21,7 @@ export default class Header extends React.Component {
         return (
             <header className="Header">
                 <Link
+                    className="header-link"
                     style={{
                         marginRight: "25px",
                         color: "black",
@@ -29,9 +30,9 @@ export default class Header extends React.Component {
                 >
                     {this.credentials.username}
                 </Link>
-                <button className="btn" onClick={(e) => this.logout(e)}>
+                <a className="btn" onClick={(e) => this.logout(e)}>
                     Log out
-                </button>
+                </a>
             </header>
         );
     }

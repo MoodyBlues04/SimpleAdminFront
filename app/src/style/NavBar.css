@@ -14,4 +14,19 @@
     justify-content: center;
     text-align: center;
     background-color: #e1f3f5;
+    text-decoration: none;
+}
+
+.NavItem:hover {
+    background-color: #cbf4f8;
+    text-decoration: none;
+}
+
+.link {
+    margin-top: 15px;
+    text-decoration: none;
+}
+
+.link:hover {
+    text-decoration: underline;
 }
